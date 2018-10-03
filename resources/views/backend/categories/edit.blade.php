@@ -7,7 +7,7 @@
     <fieldset>
         <legend>Edit Category</legend>
 
-            @include('categories.form')
+            @include('backend.categories.form')
 
         {!! Form::submit('Update') !!}
     </fieldset>

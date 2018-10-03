@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/admin', function () {
+    return view('backend.home');
+});
+
+
 Route::get('/', function () {
     return view('index');
 });

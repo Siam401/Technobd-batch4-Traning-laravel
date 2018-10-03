@@ -16,13 +16,13 @@ class CategoryController extends Controller
 //            echo $category->title.'<br>';
 //        }
 //        dd($categories);
-        return view('categories.index', compact('categories'));
-//        return view('categories.index', ['categories' => $categories]);
+        return view('backend.categories.index', compact('categories'));
+//        return view('backend.categories.index', ['categories' => $categories]);
     }
 
     public function create()
     {
-        return view('categories.create');
+        return view('backend.categories.create');
     }
 
     public function store(CategoryRequest $request)
@@ -38,19 +38,19 @@ class CategoryController extends Controller
 
         Category::create($request->all());
         Session::flash('message', 'Created Successfully');
-        return redirect()->route('categories.index');
+        return redirect()->route('backend.categories.index');
     }
 
     public function show(Category $category)//dependency injection or route model binding
     {
 //        $category = Category::findOrFail($id);
-        return view('categories.show', compact('category'));
+        return view('backend.categories.show', compact('category'));
     }
 
     public function edit(Category $category)
     {
 //        $category = Category::findOrFail($id);
-        return view('categories.edit', compact('category'));
+        return view('backend.categories.edit', compact('category'));
     }
 
     public function update(CategoryRequest $request, Category $category)
@@ -58,7 +58,7 @@ class CategoryController extends Controller
 //        $category = Category::findOrFail($id);
         $category->update($request->all());
         Session::flash('message', 'Updated Successfully');
-        return redirect()->route('categories.index');
+        return redirect()->route('backend.categories.index');
     }
 
     public function destroy(Category $category)
@@ -66,8 +66,8 @@ class CategoryController extends Controller
 //        Category::destroy($id);
         $category->delete();
         Session::flash('message', 'Deleted Successfully');
-        return redirect()->route('categories.index');
-//        return redirect()->route('categories.index')->withMessage('Deleted Successfully !');
+        return redirect()->route('backend.categories.index');
+//        return redirect()->route('backend.categories.index')->withMessage('Deleted Successfully !');
     }
 
 }
