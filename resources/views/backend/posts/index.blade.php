@@ -4,15 +4,15 @@
 <div class="card">
     <div class="card-header">
         <div class="float-left">
-            Categories
+            Posts
         </div>
         <div class="float-right">
-            <a href="{{ route('categories.trash') }}" class="btn btn-primary">Trash</a>
-            <a href="{{ route('categories.create') }}" class="btn btn-primary">Add New</a>
+{{--            <a href="{{ route('posts.trash') }}" class="btn btn-primary">Trash</a>--}}
+            <a href="{{ route('posts.create') }}" class="btn btn-primary">Add New</a>
         </div>
     </div>
     <div class="card-body">
-        {!! Form::open(['route' => 'categories.index', 'method'=>'GET']) !!}
+        {!! Form::open(['route' => 'posts.index', 'method'=>'GET']) !!}
             <div class="input-group mb-2 mr-sm-2">
                 {!! Form::text('keyword', null ,[
                                                     'class' => 'form-control'
@@ -33,18 +33,18 @@
                 <th>Title</th>
                 <th width="200" class="text-right">Action</th>
             </tr>
-            @foreach($categories as $category)
+            @foreach($posts as $post)
                 <tr>
                     <td>{{ ++$serial }}</td>
-                    <td>{{ $category->title }}</td>
+                    <td>{{ $post->title }}</td>
                     <td class="text-right">
-                        <a href="{{ route('categories.show', $category->id) }}" class="btn btn-sm btn-primary">Show</a>
-                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        {{--                    <a href="{{ route('categories.destroy', $category->id) }}">--}}
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-primary">Show</a>
+                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        {{--                    <a href="{{ route('posts.destroy', $post->id) }}">--}}
 
 
                         {!! Form::open([
-                                        'route' => ['categories.destroy', $category->id],
+                                        'route' => ['posts.destroy', $post->id],
                                         'method' => 'delete',
                                         'style' => 'display:inline',
                                     ]) !!}
@@ -63,7 +63,7 @@
             @endforeach
         </table>
         <div class="float-right">
-            {{ $categories->links() }}
+            {{ $posts->links() }}
         </div>
     </div>
 </div>

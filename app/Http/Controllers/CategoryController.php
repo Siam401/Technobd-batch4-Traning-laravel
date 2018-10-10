@@ -11,12 +11,23 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(5);
-//        foreach ($categories as $category){
-//            echo $category->title.'<br>';
-//        }
-//        dd($categories);
-        return view('backend.categories.index', compact('categories'));
+        $paginatePerPage = 5;
+        $pageNumber = request('page');
+
+        if(!is_null($pageNumber)){
+            $serial = $paginatePerPage * $pageNumber - $paginatePerPage;
+        }else{
+            $serial = 0;
+        }
+
+        $keyword = request('keyword');
+        if(!is_null($keyword)){
+            $categories = Category::where('title', 'Like', "%{$keyword}%")->paginate($paginatePerPage);
+        }else{
+            $categories = Category::paginate($paginatePerPage);
+        }
+
+        return view('backend.categories.index', compact('categories', 'serial'));
 //        return view('backend.categories.index', ['categories' => $categories]);
     }
 
@@ -38,7 +49,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
         Session::flash('message', 'Created Successfully');
-        return redirect()->route('backend.categories.index');
+        return redirect()->route('categories.index');
     }
 
     public function show(Category $category)//dependency injection or route model binding
@@ -58,7 +69,7 @@ class CategoryController extends Controller
 //        $category = Category::findOrFail($id);
         $category->update($request->all());
         Session::flash('message', 'Updated Successfully');
-        return redirect()->route('backend.categories.index');
+        return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category)
@@ -66,8 +77,35 @@ class CategoryController extends Controller
 //        Category::destroy($id);
         $category->delete();
         Session::flash('message', 'Deleted Successfully');
-        return redirect()->route('backend.categories.index');
+        return redirect()->route('categories.index');
 //        return redirect()->route('backend.categories.index')->withMessage('Deleted Successfully !');
+    }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->paginate(5);
+        return view('backend.categories.trash', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()
+                            ->where('id', $id)
+                            ->first();
+
+        $category->restore();
+        Session::flash('message', 'Restored Successfully');
+        return redirect()->back();
+    }
+
+    public function delete($id)
+    {
+        $category = Category::onlyTrashed()
+            ->where('id', $id)
+            ->first();
+        $category->forceDelete();
+        Session::flash('message', 'Delete Successfully');
+        return redirect()->back();
     }
 
 }

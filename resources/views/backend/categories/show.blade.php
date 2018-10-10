@@ -7,6 +7,16 @@
             <td>{{ $category->title }}</td>
         </tr>
         <tr>
+            <td>Posts</td>
+            <td>
+                <ul>
+                @foreach($category->posts as $post)
+                    <li><a href="#">{{ $post->title }}</a></li>
+                 @endforeach
+                </ul>
+            </td>
+        </tr>
+        <tr>
             <td>Created At</td>
             <td>{{ $category->created_at }}</td>
         </tr>
