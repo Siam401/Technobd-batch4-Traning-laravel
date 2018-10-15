@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -38,6 +38,78 @@
                                 @endif
                             </div>
                         </div>
+
+
+                        <div class="form-group row">
+                            <label for="picture" class="col-md-4 col-form-label text-md-right">picture</label>
+
+                            <div class="col-md-6">
+                                <input id="picture" type="file" class="form-control{{ $errors->has('picture') ? ' is-invalid' : '' }}" name="picture" value="{{ old('picture') }}" required>
+
+                                @if ($errors->has('picture'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('picture') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="bio" class="col-md-4 col-form-label text-md-right">Bio</label>
+
+                            <div class="col-md-6">
+                                <textarea name="bio" id="bio" cols="30" rows="10" class="form-control{{ $errors->has('bio') ? ' is-invalid' : '' }}"></textarea>
+                                @if ($errors->has('bio'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('bio') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="facebook_url" class="col-md-4 col-form-label text-md-right">Facebook Url</label>
+
+                            <div class="col-md-6">
+                                <input id="facebook_url" type="url" class="form-control{{ $errors->has('facebook_url') ? ' is-invalid' : '' }}" name="facebook_url" value="{{ old('facebook_url') }}" required>
+
+                                @if ($errors->has('facebook_url'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('facebook_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="gitlab_url" class="col-md-4 col-form-label text-md-right">Gitlab Url</label>
+
+                            <div class="col-md-6">
+                                <input id="gitlab_url" type="url" class="form-control{{ $errors->has('gitlab_url') ? ' is-invalid' : '' }}" name="gitlab_url" value="{{ old('gitlab_url') }}" required>
+
+                                @if ($errors->has('gitlab_url'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('gitlab_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="twitter_url" class="col-md-4 col-form-label text-md-right">Twitter Url</label>
+
+                            <div class="col-md-6">
+                                <input id="twitter_url" type="url" class="form-control{{ $errors->has('twitter_url') ? ' is-invalid' : '' }}" name="gitlab_url" value="{{ old('gitlab_url') }}" required>
+
+                                @if ($errors->has('twitter_url'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('twitter_url') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>

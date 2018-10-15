@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Image;
 
 class RegisterController extends Controller
 {
@@ -29,6 +31,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    const UPLOAD_DIR = '/uploads/users/';
 
     /**
      * Create a new controller instance.
@@ -63,10 +66,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if (request()->hasFile('picture')){
+            $data['picture'] = $this->uploadImage(request()->picture);
+        }
+
+
+        $user->profile()->create($data);
+
+        return $user;
+    }
+
+    private function uploadImage($file)
+    {
+        $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());//formatting the name for unique and readable
+        $file_name =  $timestamp.'.'.$file->getClientOriginalExtension();
+        Image::make($file)->resize(300, 300)->save(public_path() . self::UPLOAD_DIR . $file_name);
+        return $file_name;
     }
 }
