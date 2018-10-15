@@ -17,14 +17,14 @@ Route::get('/', function () {
 });
 
 
-Route::group(['middleware' => ['CheckCountry']], function () {
+//Route::group(['middleware' => ['CheckCountry']], function () {
     Route::get('/admin', function () {
         return view('backend.home');
     });
     Route::get('/single', function () {
         return view('frontend.pages.single');
     });
-});
+//});
 
 //Route::get('/about', function () {
 ////    echo 'About Page';
@@ -56,3 +56,7 @@ Route::resource('/posts', 'PostController');
 //Route::put('/categories/{category}', 'CategoryController@update')->name('categories.update');
 //Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
 //Route::delete('/categories/{category}', 'CategoryController@destroy')->name('categories.destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

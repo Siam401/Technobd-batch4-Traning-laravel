@@ -160,8 +160,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <img src="images/profile.jpg" class="img-fluid mb-3" alt="Responsive image">
                                 </div>
                                 <div class="profile-r align-self-center">
-                                    <h3 class="sub-title-w3-agileits">Will Smith</h3>
-                                    <a href="mailto:info@example.com">info@example.com</a>
+                                    <h3 class="sub-title-w3-agileits">{{ Auth::user()->name }} </h3>
+                                    <a href="mailto:info@example.com">{{ Auth::user()->email }}</a>
                                 </div>
                             </div>
                             <a href="#" class="dropdown-item mt-3">
@@ -185,7 +185,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <i class="far fa-thumbs-up mr-3"></i>Support</h4>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="login.html">Logout</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                     </li>
                 </ul>

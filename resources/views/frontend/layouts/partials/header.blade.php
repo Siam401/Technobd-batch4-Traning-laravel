@@ -20,6 +20,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+                @auth
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/home') }}">Home</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    </li>
+                @endauth
+
             </ul>
         </div>
     </div>
