@@ -11,16 +11,19 @@
 |
 */
 
-Route::get('/admin', function () {
-    return view('backend.home');
-});
 
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/single', function () {
-    return view('frontend.pages.single');
+
+Route::group(['middleware' => ['CheckCountry']], function () {
+    Route::get('/admin', function () {
+        return view('backend.home');
+    });
+    Route::get('/single', function () {
+        return view('frontend.pages.single');
+    });
 });
 
 //Route::get('/about', function () {

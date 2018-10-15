@@ -13,6 +13,13 @@ use Image;
 
 class PostController extends Controller
 {
+
+//    public function __construct()
+//    {
+//        $this->middleware('CheckCountry')->except('show');
+//    }
+
+
     const UPLOAD_DIR = '/uploads/posts/';
 
     public function index()
