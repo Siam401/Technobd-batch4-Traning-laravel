@@ -35,9 +35,9 @@ class PostController extends Controller
 
         $keyword = request('keyword');
         if(!is_null($keyword)){
-            $posts = Post::where('title', 'Like', "%{$keyword}%")->paginate($paginatePerPage);
+            $posts = Post::latest()->where('title', 'Like', "%{$keyword}%")->paginate($paginatePerPage);
         }else{
-            $posts = Post::paginate($paginatePerPage);
+            $posts = Post::latest()->paginate($paginatePerPage);
         }
 
         return view('backend.posts.index', compact('posts', 'serial'));

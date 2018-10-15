@@ -59,3 +59,13 @@
     </div>
 </div>
 
+@push('scripts')
+    <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('description', {
+            uiColor: '#9AB8F3'
+        });
+    </script>
+@endpush
+
+

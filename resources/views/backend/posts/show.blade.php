@@ -28,7 +28,7 @@
             
             <tr>
                 <td>Description</td>
-                <td>{{ $post->description }}</td>
+                <td>{!! $post->description !!}</td>
             </tr>
             <tr>
                 <td>Created At</td>
@@ -42,6 +42,7 @@
     </div>
 </div>
 @endsection
+
 
 
 

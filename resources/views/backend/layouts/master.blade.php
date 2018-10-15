@@ -469,6 +469,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <!-- //dropdown nav -->
 
+@stack('scripts')
+
 <!-- Js for bootstrap working-->
 <script src="{{ asset('ui/backend/js/bootstrap.min.js') }}"></script>
 <!-- //Js for bootstrap working -->
