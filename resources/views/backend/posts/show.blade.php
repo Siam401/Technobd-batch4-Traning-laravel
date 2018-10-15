@@ -34,6 +34,10 @@
                 <td>Created At</td>
                 <td>{{ $post->created_at }}</td>
             </tr>
+            <tr>
+                <td>Created By</td>
+                <td>{{ $post->creator->name }}</td>
+            </tr>
         </table>
     </div>
 </div>

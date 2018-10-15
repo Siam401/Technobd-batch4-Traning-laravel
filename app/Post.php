@@ -11,10 +11,16 @@ class Post extends Model
         'category_id',
         'description',
         'image',
+        'created_by',
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

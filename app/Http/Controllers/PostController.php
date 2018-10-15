@@ -55,6 +55,7 @@ class PostController extends Controller
         $category = Category::findOrFail($request->category_id);
 
         $data = $request->except('category_id', 'image');
+        $data['created_by'] = auth()->user()->id;
 
         if($request->hasFile('image')){
             $data['image'] = $this->uploadImage($request->image);
@@ -81,6 +82,7 @@ class PostController extends Controller
     public function show(Post $post)//dependency injection or route model binding
     {
 //        dd($post->);
+//        dd($post->creator);
 
         return view('backend.posts.show', compact('post'));
     }
