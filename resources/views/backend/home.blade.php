@@ -1,6 +1,8 @@
 @extends('backend.layouts.master')
 
 @section('content')
+
+    {{ $app_name }}
     <!--// top-bar -->
     <div class="container-fluid">
         <div class="row">

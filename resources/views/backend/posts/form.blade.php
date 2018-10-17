@@ -59,6 +59,25 @@
     </div>
 </div>
 
+
+<div class="form-group row">
+    {!! Form::label('tag_id', 'Tags', ["class" => "col-md-2 col-form-label text-md-right"]) !!}
+    <div class="col-md-10">
+        @foreach ($tags as $tag)
+            <div class="checkbox">
+                <label>
+                    {{ Form::checkbox('tag_ids[]', $tag->id, in_array($tag->title, $selectedTags), ['class' => 'field']) }}
+                    {{ $tag->title }}
+                </label>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
+{{--in_array($tag->id, $selectedTagIds--}}
+
+
 @push('scripts')
     <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
     <script>

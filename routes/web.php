@@ -48,6 +48,7 @@ Route::delete('/categories/trash/{id}/delete', 'CategoryController@delete')->nam
 Route::resource('/categories', 'CategoryController');
 
 Route::resource('/posts', 'PostController');
+Route::resource('/tags', 'TagController');
 
 //Route::get('/categories', 'CategoryController@index')->name('categories.index');
 //Route::get('/categories/create', 'CategoryController@create')->name('categories.create');
@@ -60,3 +61,4 @@ Route::resource('/posts', 'PostController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/{user}/profile', 'ShowProfile')->name('users.profile');

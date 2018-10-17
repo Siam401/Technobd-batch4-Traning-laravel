@@ -28,6 +28,23 @@
         </ul>
     </li>
 
+    <li>
+        <a href="#tags" data-toggle="collapse" aria-expanded="false">
+            <i class="fas fa-laptop"></i>
+            Tags
+            <i class="fas fa-angle-down fa-pull-right"></i>
+        </a>
+        <ul class="collapse list-unstyled" id="tags">
+            <li>
+                <a href="{{ route('tags.create') }}">Add</a>
+            </li>
+            <li>
+                <a href="{{ route('tags.index') }}">List</a>
+            </li>
+        </ul>
+    </li>
+
+
 
     <li>
         <a href="#posts" data-toggle="collapse" aria-expanded="false">

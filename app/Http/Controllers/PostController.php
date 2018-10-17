@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
+use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -47,11 +48,14 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::pluck('title', 'id');
-        return view('backend.posts.create', compact('categories'));
+        $tags = Tag::get(['title', 'id']);
+        $selectedTags = [];
+        return view('backend.posts.create', compact('categories', 'tags', 'selectedTags'));
     }
 
     public function store(PostRequest $request)
     {
+
         $category = Category::findOrFail($request->category_id);
 
         $data = $request->except('category_id', 'image');
@@ -61,7 +65,9 @@ class PostController extends Controller
             $data['image'] = $this->uploadImage($request->image);
         }
 
-        $category->posts()->create($data);
+        $post = $category->posts()->create($data);
+
+        $post->tags()->attach($request->tag_ids);
 
 //        dd($request->all());
 
@@ -89,14 +95,20 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-//        $post = Post::findOrFail($id);
-        return view('backend.posts.edit', compact('post'));
+        $categories = Category::pluck('title', 'id');
+        $tags = Tag::get(['title', 'id']);
+        $selectedTags = $post->tags()->pluck('title', 'id')->toArray();
+        return view('backend.posts.edit', compact('post', 'categories', 'tags', 'selectedTags'));
     }
 
     public function update(PostRequest $request, Post $post)
     {
 //        $post = Post::findOrFail($id);
+
         $post->update($request->all());
+
+        $post->tags()->sync($request->tag_ids);
+
         Session::flash('message', 'Updated Successfully');
         return redirect()->route('posts.index');
     }
@@ -106,7 +118,10 @@ class PostController extends Controller
 //        Post::destroy($id);
         $this->unlink($post->image);
 
+        $post->tags()->detach();
+
         $post->delete();
+
         Session::flash('message', 'Deleted Successfully');
         return redirect()->route('posts.index');
 //        return redirect()->route('backend.posts.index')->withMessage('Deleted Successfully !');
@@ -153,7 +168,5 @@ class PostController extends Controller
             @unlink(public_path() . self::UPLOAD_DIR . $file);
         }
     }
-
-
 
 }

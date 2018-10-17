@@ -4,10 +4,10 @@
     <div class="card">
         <div class="card-header">
             <div class="float-left">
-                Edit Post
+                Edit Category
             </div>
             <div class="float-right">
-                <a href="{{ route('posts.index') }}" class="btn btn-primary">List</a>
+                <a href="{{ route('categories.index') }}" class="btn btn-primary">List</a>
             </div>
         </div>
         <div class="card-body">
@@ -19,14 +19,13 @@
                     @endforeach
                 </ul>
             @endif
-            {!! Form::model($post,[
-                        'route' => ['posts.update', $post->id],
-                        'method' => 'put',
-                        'files' => true,
+            {!! Form::model($category,[
+                        'route' => ['categories.update', $category->id],
+                        'method' => 'put'
                         ]) !!}
             <fieldset>
-                <legend>Edit Post</legend>
-                    @include('backend.posts.form')
+                <legend>Edit Category</legend>
+                    @include('backend.categories.form')
                 <div class="form-group row">
                     <div class="col-sm-10 text-center">
                         {!! Form::button('Update', [
