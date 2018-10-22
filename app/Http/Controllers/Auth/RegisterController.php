@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Notifications\UserRegistered;
 use App\User;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Image;
@@ -77,8 +79,9 @@ class RegisterController extends Controller
             $data['picture'] = $this->uploadImage(request()->picture);
         }
 
-
         $user->profile()->create($data);
+
+        Notification::send($user, new UserRegistered($user));
 
         return $user;
     }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
+use App\Notifications\UserRegistered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -47,7 +49,10 @@ class CategoryController extends Controller
 //        $category->title = $request->title;
 //        $category->save();
 
-        Category::create($request->all());
+        $category = Category::create($request->all());
+
+        Notification::send(auth()->user(), new UserRegistered($category));
+
         Session::flash('message', 'Created Successfully');
         return redirect()->route('categories.index');
     }

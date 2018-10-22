@@ -30,7 +30,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link rel="stylesheet" type="text/css" href="{{ asset('ui/backend/css/pignose.calender.css') }}" />
     <!--// Calender Css -->
     <!-- Common Css -->
-    <link href="{{ asset('ui/backend/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('ui/backend/css/style.css') }}?time={{ time() }}" rel="stylesheet" type="text/css" media="all" />
     <!--// Common Css -->
     <!-- Nav Css -->
     <link rel="stylesheet" href="{{ asset('ui/backend/css/style4.css') }}">
@@ -47,7 +47,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 
 <body>
+
+
 <div class="se-pre-con"></div>
+
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
@@ -70,56 +73,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required="">
                     <button class="btn btn-style my-2 my-sm-0" type="submit">Search</button>
                 </form>
+
                 <!--// Search-from -->
                 <ul class="top-icons-agileits-w3layouts float-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i class="far fa-bell"></i>
-                            <span class="badge">4</span>
+                            <span class="badge">{{ $totalNotification }}</span>
                         </a>
+
                         <div class="dropdown-menu top-grid-scroll drop-1">
+
                             <h3 class="sub-title-w3-agileits">User notifications</h3>
-                            <a href="#" class="dropdown-item mt-3">
-                                <div class="notif-img-agileinfo">
-                                    <img src="images/clone.jpg" class="img-fluid" alt="Responsive image">
-                                </div>
-                                <div class="notif-content-wthree">
-                                    <p class="paragraph-agileits-w3layouts py-2">
-                                        <span class="text-diff">John Doe</span> Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-                                    <h6>4 mins ago</h6>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item mt-3">
-                                <div class="notif-img-agileinfo">
-                                    <img src="images/clone.jpg" class="img-fluid" alt="Responsive image">
-                                </div>
-                                <div class="notif-content-wthree">
-                                    <p class="paragraph-agileits-w3layouts py-2">
-                                        <span class="text-diff">Diana</span> Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-                                    <h6>6 mins ago</h6>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item mt-3">
-                                <div class="notif-img-agileinfo">
-                                    <img src="images/clone.jpg" class="img-fluid" alt="Responsive image">
-                                </div>
-                                <div class="notif-content-wthree">
-                                    <p class="paragraph-agileits-w3layouts py-2">
-                                        <span class="text-diff">Steffie</span> Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-                                    <h6>12 mins ago</h6>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item mt-3">
-                                <div class="notif-img-agileinfo">
-                                    <img src="images/clone.jpg" class="img-fluid" alt="Responsive image">
-                                </div>
-                                <div class="notif-content-wthree">
-                                    <p class="paragraph-agileits-w3layouts py-2">
-                                        <span class="text-diff">Jack</span> Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
-                                    <h6>1 days ago</h6>
-                                </div>
-                            </a>
+
+                            @foreach($notifications as $notification)
+                                <a href="#" class="dropdown-item mt-3">
+                                    <div class="notif-img-agileinfo">
+                                        {{--<img src="images/clone.jpg" class="img-fluid" alt="Responsive image">--}}
+                                    </div>
+                                    <div class="notif-content-wthree">
+                                        <p class="paragraph-agileits-w3layouts py-2">
+                                            <span class="text-diff">{{ $notification->type }} {{ $notification->data['title'] }}</span> </p>
+                                        <h6>{{ $notification->created_at->diffForHumans() }}</h6>
+                                    </div>
+                                </a>
+                                {{ $notification->markAsRead() }}
+                            @endforeach
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">view all notifications</a>
                         </div>
@@ -157,7 +138,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="dropdown-menu drop-3">
                             <div class="profile d-flex mr-o">
                                 <div class="profile-l align-self-center">
-                                    <img src="{{ asset('uploads/users/'.auth()->user()->profile->picture) }}" class="img-fluid mb-3" alt="Responsive image">
+                                    @if(isset(auth()->user()->profile) && file_exists(public_path() . 'uploads/users/'.auth()->user()->profile->picture))
+                                        <img src="{{ asset('uploads/users/'.auth()->user()->profile->picture) }}" class="img-fluid mb-3" alt="Responsive image">
+                                    @endif
                                 </div>
                                 <div class="profile-r align-self-center">
                                     <h3 class="sub-title-w3-agileits">{{ auth()->user()->name }} </h3>
