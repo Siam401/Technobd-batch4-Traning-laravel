@@ -12,17 +12,16 @@
 */
 
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'PublicController@index');
+Route::get('/single/{post}', 'PublicController@singlePage')->name('singlePage');
+Route::get('/category/{category}', 'PublicController@listPage')->name('listPage');
+Route::get('/tag/{tag}', 'PublicController@listPage')->name('listPageTag');
+Route::post('/post/{post}', 'CommentController')->name('comment');
 
 
 //Route::group(['middleware' => ['CheckCountry']], function () {
-    Route::get('/admin', function () {
+Route::get('/admin', function () {
         return view('backend.home');
-    });
-    Route::get('/single', function () {
-        return view('frontend.pages.single');
     });
 //});
 

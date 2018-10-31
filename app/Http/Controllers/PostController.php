@@ -56,30 +56,19 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
 
-        $category = Category::findOrFail($request->category_id);
+//        $category = Category::findOrFail($request->category_id);
 
-        $data = $request->except('category_id', 'image');
+        $data = $request->except('image');
         $data['created_by'] = auth()->user()->id;
-
         if($request->hasFile('image')){
             $data['image'] = $this->uploadImage($request->image);
         }
 
-        $post = $category->posts()->create($data);
+//        $post = $category->posts()->create($data);
+        $post = Post::create($data);
 
         $post->tags()->attach($request->tag_ids);
 
-//        dd($request->all());
-
-//        $request->validate([
-//            'title' => 'required',
-//        ]);
-
-//        $post = new Post();
-//        $post->title = $request->title;
-//        $post->save();
-
-//        Post::create($request->all());
         Session::flash('message', 'Created Successfully');
 
         return redirect()->route('posts.index');
@@ -87,8 +76,6 @@ class PostController extends Controller
 
     public function show(Post $post)//dependency injection or route model binding
     {
-//        dd($post->);
-//        dd($post->creator);
 
         return view('backend.posts.show', compact('post'));
     }
@@ -105,7 +92,13 @@ class PostController extends Controller
     {
 //        $post = Post::findOrFail($id);
 
-        $post->update($request->all());
+        $data = $request->except('image');
+        $data['updated_by'] = auth()->user()->id;
+        if($request->hasFile('image')){
+            $data['image'] = $this->uploadImage($request->image);
+        }
+
+        $post->update($data);
 
         $post->tags()->sync($request->tag_ids);
 
@@ -158,7 +151,7 @@ class PostController extends Controller
     {
         $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());//formatting the name for unique and readable
         $file_name =  $timestamp.'.'.$file->getClientOriginalExtension();
-        Image::make($file)->resize(300, 300)->save(public_path() . self::UPLOAD_DIR . $file_name);
+        Image::make($file)->resize(750, 300)->save(public_path() . self::UPLOAD_DIR . $file_name);
         return $file_name;
     }
 

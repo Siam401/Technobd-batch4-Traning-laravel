@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\CategoryRequest;
 use App\Notifications\UserRegistered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
@@ -13,6 +14,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
+
         $paginatePerPage = 5;
         $pageNumber = request('page');
 
