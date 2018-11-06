@@ -27,6 +27,13 @@
     <!-- Post Content -->
     {!! $post->description !!}
     <hr>
+    <p><strong>Tags : </strong>
+
+        @foreach($post->tags as $tag)
+            <a href="#"> {{ $tag->title }} | </a>
+        @endforeach
+    </p>
+    <hr>
 
     @if(auth()->check())
     <!-- Comments Form -->
@@ -34,7 +41,8 @@
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
             {{ Form::open(['route' => ['comment', $post->id]]) }}
-                <div class="form-group">
+            {{ Form::hidden('commentable_type', 'Post') }}
+            <div class="form-group">
                     <textarea name="body" class="form-control" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

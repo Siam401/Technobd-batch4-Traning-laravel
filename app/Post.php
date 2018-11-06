@@ -24,13 +24,18 @@ class Post extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+//    public function tags()
+//    {
+//        return $this->belongsToMany(Tag::class);
+//    }
+
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable')->orderBy('created_at', 'desc');
     }
 }

@@ -61,5 +61,20 @@
             </li>
         </ul>
     </li>
+    <li>
+        <a href="#videos" data-toggle="collapse" aria-expanded="false">
+            <i class="fas fa-laptop"></i>
+            Videos
+            <i class="fas fa-angle-down fa-pull-right"></i>
+        </a>
+        <ul class="collapse list-unstyled" id="videos">
+            <li>
+                <a href="{{ route('videos.create') }}">Add</a>
+            </li>
+            <li>
+                <a href="{{ route('videos.index') }}">List</a>
+            </li>
+        </ul>
+    </li>
 
 </ul>

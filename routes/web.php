@@ -16,7 +16,9 @@ Route::get('/', 'PublicController@index');
 Route::get('/single/{post}', 'PublicController@singlePage')->name('singlePage');
 Route::get('/category/{category}', 'PublicController@listPage')->name('listPage');
 Route::get('/tag/{tag}', 'PublicController@listPage')->name('listPageTag');
-Route::post('/post/{post}', 'CommentController')->name('comment');
+Route::post('/content/{id}', 'CommentController')->name('comment');
+Route::get('/video', 'PublicController@videoPage')->name('videoPage');
+Route::get('/video/{video}', 'PublicController@videoDetails')->name('videoDetails');
 
 
 //Route::group(['middleware' => ['CheckCountry']], function () {
@@ -45,6 +47,7 @@ Route::get('/categories/trash', 'CategoryController@trash')->name('categories.tr
 Route::get('/categories/trash/{id}/restore', 'CategoryController@restore')->name('categories.restore');
 Route::delete('/categories/trash/{id}/delete', 'CategoryController@delete')->name('categories.delete');
 Route::resource('/categories', 'CategoryController');
+Route::resource('/videos', 'VideoController');
 
 Route::resource('/posts', 'PostController');
 Route::resource('/tags', 'TagController');
